@@ -2,35 +2,32 @@ import requests
 import os
 
 def download_image(url, folder):
-    print(f"start downloaded image....")
+    print(f"Начало загрузки: {url}")
     try:
         response = requests.get(url)
-        response.raise_for_status()  
-        
+        response.raise_for_status()
+
         filename = os.path.join(folder, url.split("/")[-1])
         with open(filename, 'wb') as f:
             f.write(response.content)
-        print(f"Complete:: {filename}")
+        print(f"Загружено: {filename}")
     except Exception as e:
-        print(f"Oooops, error {url}: {e}")
+        print(f"Ошибка при загрузке {url}: {e}")
 
 def main():
-    ecle_number = 1 
-    base_folder = 'download_image'  
-    os.makedirs(base_folder, exist_ok=True)  
+    base_url = "https://resheba.top/GDZ/10-rus-2020/1/"
+    base_folder = "GDZ/RUSSIAN10/GLAVA"
+    os.makedirs(base_folder, exist_ok=True)
 
-    start_number = 4
-    end_number = 276
-    number_of_cycles = 1
+    start_number = 1
+    end_number = 491
 
-    for cycle in range(number_of_cycles):
-        current_folder = os.path.join(base_folder, str(ecle_number))  
-        os.makedirs(current_folder, exist_ok=True)
+    for number in range(start_number, end_number + 1):
+        url = f"{base_url}{number}.png"
+        download_image(url, base_folder)  # Используем правильное название функции
 
-        for number in range(start_number, end_number + 1):
-            url = f"link image url"
-            print(f"Download for:: {url}")
-            download_image(url, current_folder)  
+if __name__ == "__main__":
+    main()
 
         ecle_number += 1  
 
